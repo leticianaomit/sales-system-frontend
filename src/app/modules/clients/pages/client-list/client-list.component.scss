@@ -1,0 +1,8 @@
+.client-list__table {
+  margin-left: calc(-1 * var(--card-padding));
+  margin-right: calc(-1 * var(--card-padding));
+}
+
+.client-list__empty {
+  text-align: center;
+}
