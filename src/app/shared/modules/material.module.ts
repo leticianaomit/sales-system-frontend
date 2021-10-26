@@ -4,6 +4,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [],
@@ -14,6 +17,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatListModule,
     MatIconModule,
     MatToolbarModule,
+    MatPaginatorModule,
+    MatCardModule,
+    MatTableModule,
   ],
 })
 export class MaterialModule {}

@@ -1,1 +1,12 @@
-<mat-nav-list class="sidenav"></mat-nav-list>
+<mat-nav-list class="sidenav">
+  <div class="sidenav__header" fxLayout="row" fxLayoutAlign="center center">
+    <img class="sidenav__header-icon" src="assets/images/icons/angular.png" />
+    <h3 class="sidenav__header-title">
+      {{ "GENERAL.TITLE" | translate | uppercase }}
+    </h3>
+  </div>
+  <a mat-list-item class="sidenav__nav-item" routerLink="/clients">
+    <mat-icon color="primary">person_outline</mat-icon>
+    <span>{{ "GENERAL.TITLE" | translate }}</span>
+  </a>
+</mat-nav-list>

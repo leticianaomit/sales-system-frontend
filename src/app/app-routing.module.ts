@@ -6,6 +6,16 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    children: [
+      { path: '', redirectTo: 'clients', pathMatch: 'full' },
+      {
+        path: 'clients',
+        loadChildren: () =>
+          import('./modules/clients/clients.module').then(
+            (m) => m.ClientsModule
+          ),
+      },
+    ],
   },
 ];
 

@@ -1,8 +1,31 @@
 .sidenav {
   background: #fff;
-  width: 260px;
+  width: var(--sidenav-width);
   height: 100%;
   position: fixed;
   box-shadow: 0 16px 38px -12px rgb(0 0 0 / 56%), 0 4px 25px 0 rgb(0 0 0 / 12%),
     0 8px 10px -5px rgb(0 0 0 / 20%);
+
+  .sidenav__header-icon {
+    height: 40px;
+  }
+
+  .sidenav__header-title {
+    top: 1px;
+    position: relative;
+    color: #3c4858;
+  }
+
+  .sidenav__nav-item {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    &.active {
+      background: #f6f9fc;
+      color: rgba(0, 0, 0, 0.9);
+      margin-right: 0.5rem;
+      margin-left: 0.5rem;
+    }
+  }
 }

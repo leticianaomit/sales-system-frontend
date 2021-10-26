@@ -1,1 +1,8 @@
-{}
+{
+  "GENERAL": {
+    "TITLE": "Sales System"
+  },
+  "CLIENTS": {
+    "EMPTY_TABLE": "Nenhum cliente foi encontrado"
+  }
+}
