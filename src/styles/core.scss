@@ -1,11 +1,6 @@
-$custom-typography: mat-typography-config(
-  $font-family: "Open Sans, sans-serif;",
-);
-@include mat-core($custom-typography);
-
 body {
   margin: 0;
-  font-family: Open Sans, sans-serif;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 html,

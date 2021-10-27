@@ -1,8 +1,16 @@
 {
   "GENERAL": {
-    "TITLE": "Sales System"
+    "TITLE": "Sales System",
+    "CANCEL": "Cancelar",
+    "EDIT": "Editar",
+    "ADD": "Adicionar"
   },
   "CLIENTS": {
-    "EMPTY_TABLE": "Nenhum cliente foi encontrado"
+    "TITLE": "Clientes",
+    "SINGLE_TITLE": "Cliente",
+    "EMPTY_TABLE": "Nenhum cliente foi encontrado",
+    "FORM": {
+      "NAME": "Nome"
+    }
   }
 }

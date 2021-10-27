@@ -1,5 +1,3 @@
-@import "~@angular/material/theming";
-
 @import "./styles//core.scss";
 
 :root {
@@ -11,4 +9,7 @@
 
   // Card
   --card-padding: 16px;
+
+  // Dialog
+  --dialog-padding: 24px;
 }

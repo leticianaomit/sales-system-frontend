@@ -3,9 +3,8 @@
   background-color: rgb(245, 245, 248);
 }
 
-.layout__content {
-  padding-left: var(--padding-gutter);
-  padding-right: var(--padding-gutter);
+.layout__main {
+  padding: var(--padding-gutter);
 }
 
 @media (min-width: 1280px) {

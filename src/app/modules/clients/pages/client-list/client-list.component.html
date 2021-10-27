@@ -1,3 +1,20 @@
+<app-page-title>
+  <div class="page-title__title">
+    <mat-icon color="primary">contacts</mat-icon>
+    <span>{{ "CLIENTS.TITLE" | translate }}</span>
+  </div>
+  <button
+    mat-flat-button
+    type="button"
+    color="primary"
+    (click)="onClickBtnAddClient()"
+  >
+    <mat-icon>add</mat-icon>
+    {{ "GENERAL.ADD" | translate }}
+    {{ "CLIENTS.SINGLE_TITLE" | translate | lowercase }}
+  </button>
+</app-page-title>
+
 <mat-card>
   <div class="client-list__table">
     <table mat-table [dataSource]="dataSource" class="w-full">

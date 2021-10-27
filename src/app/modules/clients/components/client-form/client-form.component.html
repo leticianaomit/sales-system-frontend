@@ -1,0 +1,31 @@
+<form (ngSubmit)="submitForm()" [formGroup]="clientForm">
+  <div>
+    <h2 fxFlex="auto">
+      {{ (idClient ? "GENERAL.EDIT" : "GENERAL.ADD") | translate }}
+      {{ "CLIENTS.SINGLE_TITLE" | translate | lowercase }}
+    </h2>
+    <button mat-dialog-close mat-icon-button type="button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider class="client-form__divider"></mat-divider>
+  <mat-dialog-content class="client-form__content" fxLayout="column">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "CLIENTS.FORM.NAME" | translate }}</mat-label>
+      <input formControlName="name" required matInput />
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">
+      {{ "GENERAL.CANCEL" | translate }}
+    </button>
+    <button
+      [disabled]="clientForm.invalid"
+      color="primary"
+      mat-raised-button
+      type="submit"
+    >
+      Salvar
+    </button>
+  </mat-dialog-actions>
+</form>
