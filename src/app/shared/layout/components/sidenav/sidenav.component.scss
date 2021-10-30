@@ -5,27 +5,42 @@
   position: fixed;
   box-shadow: 0 16px 38px -12px rgb(0 0 0 / 56%), 0 4px 25px 0 rgb(0 0 0 / 12%),
     0 8px 10px -5px rgb(0 0 0 / 20%);
+}
 
-  .sidenav__header-icon {
-    height: 40px;
+.sidenav__header {
+  height: 80px;
+}
+
+.sidenav__header-icon {
+  height: 40px;
+}
+
+.sidenav__header-title {
+  top: 1px;
+  position: relative;
+  color: #adadad;
+  margin: 0;
+}
+
+.sidenav__list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sidenav__list-item {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding: 0.675rem 1.5rem;
+
+  &.active {
+    background: #f6f9fc;
+    color: rgba(0, 0, 0, 0.9);
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
   }
 
-  .sidenav__header-title {
-    top: 1px;
-    position: relative;
-    color: #adadad;
-  }
-
-  .sidenav__nav-item {
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 0.875rem;
-    font-weight: 500;
-
-    &.active {
-      background: #f6f9fc;
-      color: rgba(0, 0, 0, 0.9);
-      margin-right: 0.5rem;
-      margin-left: 0.5rem;
-    }
+  > .sidenav__item-icon {
+    min-width: 2rem;
   }
 }

@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ResponseClientDTO } from 'src/app/core/models/client';
+import { ClientsService } from 'src/app/core/services/clients.service';
 
 @Component({
   selector: 'app-client-form',
@@ -17,7 +18,8 @@ export class ClientFormComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) private clientData: ResponseClientDTO,
     private fb: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private clientsService: ClientsService
   ) {
     if (this.clientData?.id) {
       this.idClient = this.clientData.id;
@@ -29,7 +31,19 @@ export class ClientFormComponent implements OnInit {
 
   submitForm() {
     const form = this.clientForm.value;
+    const client: ResponseClientDTO = form;
+
+    if (this.idClient) this.updateClient(client);
+    else this.saveClient(client);
 
     this.dialog.closeAll();
+  }
+
+  private async updateClient(client: ResponseClientDTO) {
+    await this.clientsService.updateClient(this.idClient, client);
+  }
+
+  private async saveClient(client: ResponseClientDTO) {
+    await this.clientsService.saveClient(client);
   }
 }
