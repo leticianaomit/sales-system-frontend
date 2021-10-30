@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { ResponseClientDTO } from 'src/app/core/models/client';
@@ -31,6 +32,8 @@ export class ClientListComponent implements OnInit {
   clientListSubscription!: Subscription;
   dialogSubscription!: Subscription;
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   constructor(
     private dialog: MatDialog,
     private clientsService: ClientsService
@@ -44,12 +47,14 @@ export class ClientListComponent implements OnInit {
     this.clientListSubscription?.unsubscribe();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   loadClients() {
     this.clientsService.getClientList();
     this.clientListSubscription = this.clientsService.clientList$.subscribe(
       (data) => {
-        console.log(data);
-
         this.dataSource.data = data;
       }
     );
