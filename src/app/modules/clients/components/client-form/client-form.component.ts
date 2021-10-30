@@ -39,11 +39,17 @@ export class ClientFormComponent implements OnInit {
     this.dialog.closeAll();
   }
 
+  refreshClientList() {
+    this.clientsService.getClientList();
+  }
+
   private async updateClient(client: ResponseClientDTO) {
     await this.clientsService.updateClient(this.idClient, client);
+    this.refreshClientList();
   }
 
   private async saveClient(client: ResponseClientDTO) {
     await this.clientsService.saveClient(client);
+    this.refreshClientList();
   }
 }
