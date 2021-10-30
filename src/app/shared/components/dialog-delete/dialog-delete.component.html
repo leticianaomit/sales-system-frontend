@@ -1,0 +1,17 @@
+<h2>Remover</h2>
+
+<mat-dialog-content>
+  <span> Esta ação não poderá ser desfeita! </span>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button
+    (click)="onClickButtonDelete()"
+    mat-raised-button
+    color="warn"
+    type="submit"
+  >
+    REMOVER
+  </button>
+  <button mat-button mat-dialog-close type="button">CANCELAR</button>
+</mat-dialog-actions>

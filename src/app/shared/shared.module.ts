@@ -5,10 +5,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PageTitleComponent } from './components/page-title/page-title.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.component';
 
 @NgModule({
-  declarations: [PageTitleComponent],
-  imports: [CommonModule, FlexLayoutModule],
+  declarations: [PageTitleComponent, DialogDeleteComponent],
+  imports: [CommonModule, FlexLayoutModule, MaterialModule],
   exports: [
     MaterialModule,
     TranslateModule,
@@ -16,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     PageTitleComponent,
+    DialogDeleteComponent,
   ],
 })
 export class SharedModule {}
