@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { ResponseProductDTO } from 'src/app/core/models/product';
 import { ProductsService } from 'src/app/core/services/products.service';
+import { DialogDeleteComponent } from 'src/app/shared/components/dialog-delete/dialog-delete.component';
+import { ProductFormComponent } from '../../components/product-form/product-form.component';
 
 @Component({
   selector: 'app-product-list',
@@ -38,7 +40,7 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadClients();
+    this.loadProducts();
   }
 
   ngOnDestroy(): void {
@@ -49,7 +51,7 @@ export class ProductListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  loadClients() {
+  loadProducts() {
     this.productsService.getProductList();
     this.productListSubscription = this.productsService.productList$.subscribe(
       (data) => {
@@ -59,36 +61,36 @@ export class ProductListComponent implements OnInit {
   }
 
   onClickBtnAddProduct() {
-    // this.dialog.open(ClientFormComponent, {
-    //   width: '600px',
-    //   autoFocus: false,
-    // });
+    this.dialog.open(ProductFormComponent, {
+      width: '600px',
+      autoFocus: false,
+    });
   }
 
   onClickBtnEditProduct(product: ResponseProductDTO) {
-    // this.dialog.open(ClientFormComponent, {
-    //   data: client,
-    //   width: '600px',
-    //   autoFocus: false,
-    // });
+    this.dialog.open(ProductFormComponent, {
+      data: product,
+      width: '600px',
+      autoFocus: false,
+    });
   }
 
   onClickBtnDeleteProduct(id: ResponseProductDTO['id']) {
-    // const dialogRef = this.dialog.open(DialogDeleteComponent, {
-    //   width: '300px',
-    //   autoFocus: false,
-    // });
+    const dialogRef = this.dialog.open(DialogDeleteComponent, {
+      width: '300px',
+      autoFocus: false,
+    });
 
-    // this.dialogSubscription?.unsubscribe();
-    // this.dialogSubscription =
-    //   dialogRef.componentInstance.whenConfirmDelete.subscribe(() => {
-    //     this.deleteClient(id);
-    //   });
+    this.dialogSubscription?.unsubscribe();
+    this.dialogSubscription =
+      dialogRef.componentInstance.whenConfirmDelete.subscribe(() => {
+        this.deleteProduct(id);
+      });
   }
 
-  // async deleteClient(id: string) {
-  //   await this.clientsService.deleteClient(id);
-  //   this.clientsService.getClientList();
-  //   this.dialog.closeAll();
-  // }
+  async deleteProduct(id: string) {
+    await this.productsService.deleteProduct(id);
+    this.productsService.getProductList();
+    this.dialog.closeAll();
+  }
 }

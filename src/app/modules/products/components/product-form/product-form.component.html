@@ -1,0 +1,39 @@
+<form (ngSubmit)="submitForm()" [formGroup]="productForm">
+  <div>
+    <h2 fxFlex="auto">
+      {{ (idProduct ? "GENERAL.EDIT" : "GENERAL.ADD") | translate }}
+      {{ "PRODUCTS.TITLE_SINGLE" | translate | lowercase }}
+    </h2>
+    <button mat-dialog-close mat-icon-button type="button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider class="product-form__divider"></mat-divider>
+  <mat-dialog-content class="product-form__content" fxLayout="column">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "PRODUCTS.FORM.NAME" | translate }}</mat-label>
+      <input formControlName="name" required matInput />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "PRODUCTS.FORM.PRICE" | translate }}</mat-label>
+      <input formControlName="price" required matInput />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "PRODUCTS.FORM.MULTIPLE" | translate }}</mat-label>
+      <input formControlName="multiple" matInput />
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">
+      {{ "GENERAL.CANCEL" | translate }}
+    </button>
+    <button
+      [disabled]="productForm.invalid"
+      color="primary"
+      mat-raised-button
+      type="submit"
+    >
+      Salvar
+    </button>
+  </mat-dialog-actions>
+</form>

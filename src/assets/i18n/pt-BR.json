@@ -35,6 +35,11 @@
   "PRODUCTS": {
     "TITLE": "Produtos",
     "TITLE_SINGLE": "Produto",
-    "EMPTY_TABLE": "Nenhum produto foi encontrado"
+    "EMPTY_TABLE": "Nenhum produto foi encontrado",
+    "FORM": {
+      "NAME": "Nome",
+      "PRICE": "Preço unitário",
+      "MULTIPLE": "Múltiplo"
+    }
   }
 }

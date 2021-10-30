@@ -1,0 +1,8 @@
+.product-form__divider {
+  margin-right: calc(-1 * var(--dialog-padding));
+  margin-left: calc(-1 * var(--dialog-padding));
+}
+
+.product-form__content {
+  padding-top: var(--dialog-padding);
+}
