@@ -5,12 +5,19 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HttpBackend,
+  HttpClient,
+  HttpClientModule,
+} from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LayoutModule } from './shared/layout/layout.module';
+import { InterceptorModule } from './core/interceptor/interceptor.module';
 
-export function HttpLoaderFactory(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient);
+export function HttpLoaderFactory(handler: HttpBackend) {
+  const http = new HttpClient(handler);
+
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
@@ -21,11 +28,12 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AppRoutingModule,
     LayoutModule,
     HttpClientModule,
+    InterceptorModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
+        deps: [HttpBackend],
       },
     }),
   ],
