@@ -31,5 +31,10 @@
     "FORM": {
       "NAME": "Nome"
     }
+  },
+  "PRODUCTS": {
+    "TITLE": "Produtos",
+    "TITLE_SINGLE": "Produto",
+    "EMPTY_TABLE": "Nenhum produto foi encontrado"
   }
 }

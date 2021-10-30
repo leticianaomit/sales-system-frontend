@@ -8,15 +8,16 @@
   <div class="sidenav__content">
     <ul class="sidenav__list">
       <li
+        *ngFor="let item of navItems"
         class="sidenav__list-item"
-        routerLink="/clients"
+        [routerLink]="item.routerLink"
         fxLayout="row"
         fxLayoutAlign="left center"
       >
         <mat-icon class="sidenav__item-icon" color="primary">
-          person_outline
+          {{ item.icon }}
         </mat-icon>
-        <span>{{ "CLIENTS.TITLE" | translate }}</span>
+        <span>{{ item.name | translate }}</span>
       </li>
     </ul>
   </div>
