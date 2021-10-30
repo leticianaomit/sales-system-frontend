@@ -12,3 +12,26 @@ body,
 .w-full {
   width: 100%;
 }
+
+// SnackBar
+.green-snackbar {
+  background: #087f23;
+  color: white;
+
+  & button {
+    background-color: #087f23;
+    color: white;
+    border: none;
+  }
+}
+
+.red-snackbar {
+  background: #f44336;
+  color: white;
+
+  & button {
+    background-color: #f44336;
+    color: white !important;
+    border: none;
+  }
+}

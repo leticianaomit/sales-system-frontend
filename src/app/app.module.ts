@@ -13,6 +13,7 @@ import {
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LayoutModule } from './shared/layout/layout.module';
 import { InterceptorModule } from './core/interceptor/interceptor.module';
+import { MaterialModule } from './shared/modules/material.module';
 
 export function HttpLoaderFactory(handler: HttpBackend) {
   const http = new HttpClient(handler);
@@ -36,6 +37,7 @@ export function HttpLoaderFactory(handler: HttpBackend) {
         deps: [HttpBackend],
       },
     }),
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent],

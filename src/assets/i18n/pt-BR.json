@@ -3,11 +3,30 @@
     "TITLE": "Sales System",
     "CANCEL": "Cancelar",
     "EDIT": "Editar",
-    "ADD": "Adicionar"
+    "ADD": "Adicionar",
+    "OK": "Ok",
+    "TRY_AGAIN": "Tente novamente"
+  },
+  "CRUD_MESSAGES": {
+    "CREATE": {
+      "SUCCESS": "{{ type }} salvo com sucesso!",
+      "FAILURE": "Não foi possível salvar o {{ type }}!"
+    },
+    "READ": {
+      "FAILURE_PLURAL": "Não foi possível buscar os {{ type }}!"
+    },
+    "UPDATE": {
+      "SUCCESS": "{{ type }} atualizado com sucesso!",
+      "FAILURE": "Não foi possível atualizar o {{ type }}!"
+    },
+    "DELETE": {
+      "SUCCESS": "{{ type }} removido com sucesso!",
+      "FAILURE": "Não foi possível remover o {{ type }}!"
+    }
   },
   "CLIENTS": {
     "TITLE": "Clientes",
-    "SINGLE_TITLE": "Cliente",
+    "TITLE_SINGLE": "Cliente",
     "EMPTY_TABLE": "Nenhum cliente foi encontrado",
     "FORM": {
       "NAME": "Nome"
