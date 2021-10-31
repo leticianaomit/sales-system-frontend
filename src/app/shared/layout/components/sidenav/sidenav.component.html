@@ -1,23 +1,33 @@
 <mat-nav-list class="sidenav">
-  <div class="sidenav__header" fxLayout="row" fxLayoutAlign="center center">
-    <img class="sidenav__header-icon" src="assets/images/icons/angular.png" />
+  <div
+    class="sidenav__header"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="5px"
+  >
+    <img
+      class="sidenav__header-icon"
+      src="assets/svg/icons/angular-transparent.svg"
+    />
     <h2 class="sidenav__header-title">
       {{ "GENERAL.TITLE" | translate | uppercase }}
     </h2>
   </div>
+  <mat-divider class="sidenav__divider"></mat-divider>
   <div class="sidenav__content">
     <ul class="sidenav__list">
       <li
         *ngFor="let item of navItems"
         class="sidenav__list-item"
         [routerLink]="item.routerLink"
+        routerLinkActive="active"
         fxLayout="row"
         fxLayoutAlign="left center"
       >
-        <mat-icon class="sidenav__item-icon" color="primary">
+        <mat-icon class="sidenav__item-icon">
           {{ item.icon }}
         </mat-icon>
-        <span>{{ item.name | translate }}</span>
+        <p class="sidenav__item-text">{{ item.name | translate }}</p>
       </li>
     </ul>
   </div>

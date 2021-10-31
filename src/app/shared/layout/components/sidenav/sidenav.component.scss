@@ -1,5 +1,7 @@
+$sidenav-padding: 1rem;
+
 .sidenav {
-  background: #fff;
+  background: var(--primary-color);
   width: var(--sidenav-width);
   height: 100%;
   position: fixed;
@@ -9,6 +11,10 @@
 
 .sidenav__header {
   height: 80px;
+  padding-left: $sidenav-padding;
+  padding-right: $sidenav-padding;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .sidenav__header-icon {
@@ -18,8 +24,13 @@
 .sidenav__header-title {
   top: 1px;
   position: relative;
-  color: #adadad;
+  color: #fff;
   margin: 0;
+}
+
+.sidenav__divider {
+  margin-left: $sidenav-padding;
+  margin-right: $sidenav-padding;
 }
 
 .sidenav__list {
@@ -28,19 +39,31 @@
 }
 
 .sidenav__list-item {
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 0.9rem;
+  border-radius: 3px;
+  height: 48px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 14px;
   font-weight: 400;
-  padding: 0.675rem 1.5rem;
+  padding: $sidenav-padding;
+  margin: 0.5rem $sidenav-padding 0;
+  transition: all 0.15s ease-in;
+
+  &:hover {
+    background: rgb(255 255 255 / 5%);
+  }
 
   &.active {
-    background: #f6f9fc;
-    color: rgba(0, 0, 0, 0.9);
-    margin-right: 0.5rem;
-    margin-left: 0.5rem;
+    background: #fff;
+    color: var(--primary-color);
   }
 
   > .sidenav__item-icon {
-    min-width: 2rem;
+    min-width: 2.5rem;
+  }
+
+  > .sidenav__item-text {
+    line-height: 25px;
+    margin: 0;
   }
 }
