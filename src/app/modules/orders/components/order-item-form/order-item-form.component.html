@@ -1,0 +1,53 @@
+<form [formGroup]="orderItemForm">
+  <div>
+    <h2 fxFlex="auto">
+      {{ (idClient ? "GENERAL.EDIT" : "GENERAL.ADD") | translate }}
+      {{ "ORDERS.FORM.ITEM" | translate | lowercase }}
+    </h2>
+    <button mat-dialog-close mat-icon-button type="button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-divider class="item-form__divider"></mat-divider>
+  <mat-dialog-content class="item-form__content" fxLayout="column">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "ORDERS.FORM.SELECT_PRODUCT" | translate }}</mat-label>
+      <input
+        type="text"
+        matInput
+        [matAutocomplete]="auto"
+        [formControl]="orderItemControl"
+      />
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="getProductName">
+        <mat-option *ngFor="let option of filteredProducts" [value]="option">
+          {{ option.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "ORDERS.FORM.ORIGINAL_PRICE" | translate }}</mat-label>
+      <input readonly matInput />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "ORDERS.FORM.PRICE" | translate }}</mat-label>
+      <input formControlName="price" required matInput />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ "ORDERS.FORM.QUANTITY" | translate }}</mat-label>
+      <input formControlName="quantity" type="number" required matInput />
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">
+      {{ "GENERAL.CANCEL" | translate }}
+    </button>
+    <button
+      [disabled]="orderItemForm.invalid"
+      color="primary"
+      mat-raised-button
+      type="submit"
+    >
+      Salvar
+    </button>
+  </mat-dialog-actions>
+</form>

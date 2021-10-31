@@ -8,8 +8,8 @@
   </div>
 </app-page-title>
 
-<mat-card>
-  <form class="order-form" [formGroup]="orderForm" fxLayout="column">
+<mat-card class="order-form__card">
+  <form [formGroup]="orderForm" fxLayout="column">
     <div fxLayout="column">
       <mat-form-field appearance="fill">
         <mat-label>{{ "ORDERS.FORM.SELECT_CLIENT" | translate }}</mat-label>
@@ -25,6 +25,22 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
+      <div>
+        <div fxLayout="row" fxLayoutAlign="space-between end">
+          <h4>
+            <b> {{ "PRODUCTS.TITLE" | translate }}</b>
+          </h4>
+          <button
+            mat-button
+            type="button"
+            color="primary"
+            (click)="onClickBtnAddItem()"
+          >
+            <mat-icon>add</mat-icon>
+            {{ "GENERAL.ADD" | translate }}
+          </button>
+        </div>
+      </div>
     </div>
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <button mat-button mat-dialog-close type="button" routerLink="/orders">

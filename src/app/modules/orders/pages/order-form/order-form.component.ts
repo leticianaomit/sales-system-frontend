@@ -5,10 +5,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { take, skip, startWith, map } from 'rxjs/operators';
 import { ResponseClientDTO } from 'src/app/core/models/client';
 import { ClientsService } from 'src/app/core/services/clients.service';
+import { OrderItemFormComponent } from '../../components/order-item-form/order-item-form.component';
 
 @Component({
   selector: 'app-order-form',
@@ -16,6 +18,19 @@ import { ClientsService } from 'src/app/core/services/clients.service';
   styleUrls: ['./order-form.component.scss'],
 })
 export class OrderFormComponent implements OnInit {
+  productTableColumns: any = [
+    {
+      label: 'PRODUCTS.FORM.NAME',
+      property: 'name',
+      type: 'text',
+    },
+    {
+      property: 'id',
+      type: 'actions',
+    },
+  ];
+  displayedProductColumns = ['name', 'price', 'quantity'];
+
   orderControl = new FormControl();
   orderForm: FormGroup = this.fb.group({
     client: [null, Validators.required],
@@ -27,7 +42,8 @@ export class OrderFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private clientsService: ClientsService
+    private clientsService: ClientsService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -68,5 +84,12 @@ export class OrderFormComponent implements OnInit {
     return this.clientList.filter((option) =>
       option.name.toLowerCase().includes(filterValue)
     );
+  }
+
+  onClickBtnAddItem() {
+    this.dialog.open(OrderItemFormComponent, {
+      width: '600px',
+      autoFocus: false,
+    });
   }
 }
