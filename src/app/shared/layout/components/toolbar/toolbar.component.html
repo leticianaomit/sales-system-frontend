@@ -1,1 +1,13 @@
-<mat-toolbar color="primary"></mat-toolbar>
+<mat-toolbar color="primary" fxLayoutGap="10px">
+  <button
+    mat-icon-button
+    type="button"
+    color="white"
+    (click)="onClickBtnShowSidenav()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h2>
+    {{ "GENERAL.TITLE" | translate | uppercase }}
+  </h2>
+</mat-toolbar>

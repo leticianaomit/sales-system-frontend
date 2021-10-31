@@ -1,9 +1,12 @@
 <mat-drawer-container class="layout__container">
-  <mat-drawer mode="side" opened>
+  <mat-drawer [mode]="navMode" [(opened)]="showNav" class="layout__sidenav">
     <app-sidenav></app-sidenav>
   </mat-drawer>
   <mat-drawer-content class="layout__content">
-    <app-toolbar></app-toolbar>
+    <app-toolbar
+      class="layout__toolbar"
+      (toggleSidenav)="showNav = $event"
+    ></app-toolbar>
     <main class="layout__main">
       <router-outlet></router-outlet>
     </main>

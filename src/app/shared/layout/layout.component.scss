@@ -11,4 +11,8 @@
   .layout__content {
     margin-left: var(--sidenav-width) !important;
   }
+
+  .layout__toolbar {
+    display: none;
+  }
 }
