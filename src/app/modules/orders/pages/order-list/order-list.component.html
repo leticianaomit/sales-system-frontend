@@ -14,3 +14,56 @@
     {{ "ORDERS.TITLE_SINGLE" | translate | lowercase }}
   </button>
 </app-page-title>
+
+<mat-card>
+  <div class="order-list__table">
+    <table mat-table [dataSource]="dataSource" class="w-full">
+      <ng-container *ngFor="let column of tableColumns">
+        <ng-container
+          *ngIf="column.type === 'text'"
+          [matColumnDef]="column.property"
+        >
+          <th mat-header-cell *matHeaderCellDef>
+            {{ column.label }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element[column.property] }}
+          </td>
+        </ng-container>
+        <ng-container
+          *ngIf="column.type === 'actions'"
+          [matColumnDef]="column.property"
+        >
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <div
+              class="order-list__table-actions"
+              fxLayout="row"
+              fxLayoutAlign="end center"
+              fxLayoutGap="5px"
+            >
+              <button mat-mini-fab color="accent">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-mini-fab color="warn">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+      </ng-container>
+
+      <tr class="mat-row order-list__empty" *matNoDataRow>
+        <td class="mat-cell" colspan="5">
+          {{ "ORDERS.EMPTY_TABLE" | translate }}
+        </td>
+      </tr>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</mat-card>

@@ -1,0 +1,43 @@
+<app-page-title>
+  <div class="page-title__title">
+    <mat-icon color="primary">shopping_cart</mat-icon>
+    <span>
+      {{ "GENERAL.ADD" | translate }}
+      {{ "ORDERS.TITLE_SINGLE" | translate }}
+    </span>
+  </div>
+</app-page-title>
+
+<mat-card>
+  <form class="order-form" [formGroup]="orderForm" fxLayout="column">
+    <div fxLayout="column">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ "ORDERS.FORM.SELECT_CLIENT" | translate }}</mat-label>
+        <input
+          type="text"
+          matInput
+          [matAutocomplete]="auto"
+          [formControl]="orderControl"
+        />
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="getClientName">
+          <mat-option *ngFor="let option of filteredClients" [value]="option">
+            {{ option.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <button mat-button mat-dialog-close type="button" routerLink="/orders">
+        {{ "GENERAL.CANCEL" | translate }}
+      </button>
+      <button
+        [disabled]="orderForm.invalid"
+        color="primary"
+        mat-raised-button
+        type="submit"
+      >
+        Salvar
+      </button>
+    </div>
+  </form>
+</mat-card>
