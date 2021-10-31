@@ -1,1 +1,16 @@
-<p>order-list works!</p>
+<app-page-title>
+  <div class="page-title__title">
+    <mat-icon color="primary">shopping_cart</mat-icon>
+    <span>{{ "ORDERS.TITLE" | translate }}</span>
+  </div>
+  <button
+    mat-flat-button
+    type="button"
+    color="primary"
+    (click)="onClickBtnAddOrder()"
+  >
+    <mat-icon>add</mat-icon>
+    {{ "GENERAL.ADD" | translate }}
+    {{ "ORDERS.TITLE_SINGLE" | translate | lowercase }}
+  </button>
+</app-page-title>
