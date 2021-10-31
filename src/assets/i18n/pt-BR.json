@@ -41,5 +41,12 @@
       "PRICE": "Preço unitário",
       "MULTIPLE": "Múltiplo"
     }
+  },
+  "ORDERS": {
+    "TITLE": "Pedidos",
+    "TITLE_SINGLE": "Pedido",
+    "EMPTY_TABLE": "Nenhum pedido foi encontrado",
+    "FORM": {
+    }
   }
 }
