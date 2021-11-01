@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -9,6 +9,9 @@ import { Subscription } from 'rxjs';
 import { map, skip, startWith, take } from 'rxjs/operators';
 import { ResponseProductDTO } from 'src/app/core/models/product';
 import { ProductsService } from 'src/app/core/services/products.service';
+import { CurrencyService } from 'src/app/shared/services/currency.service';
+import { MatOption } from '@angular/material/core';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-order-item-form',
@@ -16,19 +19,25 @@ import { ProductsService } from 'src/app/core/services/products.service';
   styleUrls: ['./order-item-form.component.scss'],
 })
 export class OrderItemFormComponent implements OnInit {
-  idClient!: string;
   orderItemForm: FormGroup = this.fb.group({
     product: [null, Validators.required],
+    price: [{ value: null, disabled: true }, Validators.required],
+    quantity: [{ value: null, disabled: true }, Validators.required],
   });
   orderItemControl = new FormControl();
   productList: ResponseProductDTO[] = [];
   filteredProducts!: ResponseProductDTO[];
+  formattedPrice!: string;
+  originalPrice: string = '';
 
   orderItemControlSubscription!: Subscription;
 
+  @ViewChild(MatAutocomplete) itemAutocomplete!: any;
+
   constructor(
     private fb: FormBuilder,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private currencyService: CurrencyService
   ) {}
 
   ngOnInit(): void {
@@ -70,5 +79,23 @@ export class OrderItemFormComponent implements OnInit {
     return this.productList.filter((option) =>
       option.name.toLowerCase().includes(filterValue)
     );
+  }
+
+  transformPrice() {
+    this.formattedPrice =
+      this.currencyService.transform(this.formattedPrice) || '';
+  }
+
+  onProductSelected(option: MatOption) {
+    if (option?.value?.id) {
+      this.orderItemForm.get('price')?.enable();
+      this.orderItemForm.get('quantity')?.enable();
+      this.orderItemForm.patchValue({
+        product: option.value,
+        price: option.value.price,
+        quantity: option.value.multiple,
+      });
+      this.originalPrice = option.value.price;
+    }
   }
 }

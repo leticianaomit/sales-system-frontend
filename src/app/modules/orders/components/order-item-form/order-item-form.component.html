@@ -1,7 +1,7 @@
 <form [formGroup]="orderItemForm">
   <div>
     <h2 fxFlex="auto">
-      {{ (idClient ? "GENERAL.EDIT" : "GENERAL.ADD") | translate }}
+      {{ "GENERAL.ADD" | translate }}
       {{ "ORDERS.FORM.ITEM" | translate | lowercase }}
     </h2>
     <button mat-dialog-close mat-icon-button type="button">
@@ -17,8 +17,13 @@
         matInput
         [matAutocomplete]="auto"
         [formControl]="orderItemControl"
+        required
       />
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="getProductName">
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        [displayWith]="getProductName"
+        (optionSelected)="onProductSelected($event.option)"
+      >
         <mat-option *ngFor="let option of filteredProducts" [value]="option">
           {{ option.name }}
         </mat-option>
@@ -26,15 +31,29 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>{{ "ORDERS.FORM.ORIGINAL_PRICE" | translate }}</mat-label>
-      <input readonly matInput />
+      <input [value]="originalPrice" disabled matInput />
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>{{ "ORDERS.FORM.PRICE" | translate }}</mat-label>
-      <input formControlName="price" required matInput />
+      <input
+        formControlName="price"
+        type="number"
+        (blur)="transformPrice()"
+        [(ngModel)]="formattedPrice"
+        matInput
+        required
+      />
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>{{ "ORDERS.FORM.QUANTITY" | translate }}</mat-label>
-      <input formControlName="quantity" type="number" required matInput />
+      <input
+        type="number"
+        formControlName="quantity"
+        matInput
+        step="1"
+        min="1"
+        inputmode="numeric"
+      />
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions align="end">

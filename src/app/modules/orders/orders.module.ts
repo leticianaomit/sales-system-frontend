@@ -7,11 +7,7 @@ import { OrderFormComponent } from './pages/order-form/order-form.component';
 import { OrderItemFormComponent } from './components/order-item-form/order-item-form.component';
 
 @NgModule({
-  declarations: [
-    OrderListComponent,
-    OrderFormComponent,
-    OrderItemFormComponent,
-  ],
+  declarations: [OrderListComponent, OrderFormComponent, OrderItemFormComponent],
   imports: [CommonModule, OrdersRoutingModule, SharedModule],
 })
 export class OrdersModule {}
