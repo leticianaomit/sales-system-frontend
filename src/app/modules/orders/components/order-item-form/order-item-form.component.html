@@ -54,6 +54,14 @@
         min="1"
         inputmode="numeric"
       />
+      <mat-error
+        *ngIf="orderItemForm.get('quantity')?.errors?.multiple as multiple"
+        [innerHTML]="
+          'ORDERS.ERROR_MESSAGES.IS_NOT_MULTIPLE'
+            | translate: { quantity: multiple }
+        "
+      >
+      </mat-error>
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions align="end">

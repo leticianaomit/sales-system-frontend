@@ -55,6 +55,9 @@
       "ORIGINAL_PRICE": "Preço original",
       "PRICE": "Preço",
       "ITEM_NAME": "Nome do produto"
+    },
+    "ERROR_MESSAGES": {
+      "IS_NOT_MULTIPLE": "O número deve ser múltiplo de <b>{{ quantity }}</b>"
     }
   }
 }

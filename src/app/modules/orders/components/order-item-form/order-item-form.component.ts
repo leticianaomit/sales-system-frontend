@@ -6,9 +6,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -32,7 +34,7 @@ export class OrderItemFormComponent implements OnInit {
   orderItemForm: FormGroup = this.fb.group({
     product: [null, Validators.required],
     price: [{ value: null, disabled: true }, Validators.required],
-    quantity: [{ value: null, disabled: true }, Validators.required],
+    quantity: [{ value: null, disabled: true }, [Validators.required]],
   });
   orderItemControl = new FormControl();
   productList: ResponseProductDTO[] = [];
@@ -64,6 +66,8 @@ export class OrderItemFormComponent implements OnInit {
       .subscribe((res) => {
         this.filteredProducts = res;
       });
+
+    this.orderItemForm?.get('quantity')?.addValidators([this.isMultiple()]);
   }
 
   ngOnDestroy(): void {
@@ -114,10 +118,19 @@ export class OrderItemFormComponent implements OnInit {
     const form = this.orderItemForm.value;
     const item: OrderItem = form;
 
-    // if (this.idClient) this.updateClient(client);
-    // else
     this.whenItemAdded.emit(item);
 
     this.dialog.closeAll();
   }
+
+  isMultiple = (): ValidatorFn => {
+    return (control: AbstractControl) => {
+      const quantity = control.value || 1;
+      const productMultiple =
+        this.orderItemForm.get('product')?.value?.multiple || 1;
+      if (quantity % productMultiple !== 0)
+        return { multiple: productMultiple };
+      return null;
+    };
+  };
 }
