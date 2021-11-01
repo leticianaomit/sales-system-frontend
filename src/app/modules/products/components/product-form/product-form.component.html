@@ -16,11 +16,23 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>{{ "PRODUCTS.FORM.PRICE" | translate }}</mat-label>
-      <input formControlName="price" required matInput />
+      <input
+        formControlName="price"
+        type="number"
+        (blur)="transformPrice()"
+        [(ngModel)]="formattedPrice"
+        matInput
+      />
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>{{ "PRODUCTS.FORM.MULTIPLE" | translate }}</mat-label>
-      <input type="number" formControlName="multiple" matInput />
+      <input
+        type="number"
+        formControlName="multiple"
+        matInput
+        min="1"
+        inputmode="numeric"
+      />
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions align="end">

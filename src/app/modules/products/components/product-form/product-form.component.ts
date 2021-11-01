@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ResponseProductDTO } from 'src/app/core/models/product';
 import { ProductsService } from 'src/app/core/services/products.service';
+import { CurrencyService } from 'src/app/shared/services/currency.service';
 
 @Component({
   selector: 'app-product-form',
@@ -14,14 +15,16 @@ export class ProductFormComponent implements OnInit {
   productForm: FormGroup = this.fb.group({
     name: [null, Validators.required],
     price: [null, Validators.required],
-    multiple: [null],
+    multiple: [null, Validators.pattern('^[0-9]*$')],
   });
+  formattedPrice!: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private productData: ResponseProductDTO,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private currencyService: CurrencyService
   ) {
     if (this.productData?.id) {
       this.idProduct = this.productData.id;
@@ -53,5 +56,10 @@ export class ProductFormComponent implements OnInit {
   private async saveProduct(product: ResponseProductDTO) {
     await this.productsService.saveProduct(product);
     this.refreshProductList();
+  }
+
+  transformPrice() {
+    this.formattedPrice =
+      this.currencyService.transform(this.formattedPrice) || '';
   }
 }

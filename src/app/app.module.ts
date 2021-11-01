@@ -14,6 +14,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LayoutModule } from './shared/layout/layout.module';
 import { InterceptorModule } from './core/interceptor/interceptor.module';
 import { MaterialModule } from './shared/modules/material.module';
+import { CurrencyPipe } from '@angular/common';
 
 export function HttpLoaderFactory(handler: HttpBackend) {
   const http = new HttpClient(handler);
@@ -37,9 +38,9 @@ export function HttpLoaderFactory(handler: HttpBackend) {
         deps: [HttpBackend],
       },
     }),
-    MaterialModule
+    MaterialModule,
   ],
-  providers: [],
+  providers: [CurrencyPipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
