@@ -26,6 +26,7 @@ import { MatAutocomplete } from '@angular/material/autocomplete';
 import { OrderItem } from 'src/app/core/models/order-item';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { priceStatusProfitability } from 'src/app/core/enums/order-item';
 
 @Component({
   selector: 'app-order-item-form',
@@ -46,6 +47,7 @@ export class OrderItemFormComponent implements OnInit {
   formattedPrice!: string;
   originalPrice: string = '';
   priceTextProfitability: string = '';
+  priceStatusProfitability!: keyof typeof priceStatusProfitability;
 
   orderItemControlSubscription!: Subscription;
 
@@ -74,6 +76,9 @@ export class OrderItemFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.orderItemForm?.get('quantity')?.addValidators([this.isMultiple()]);
+    this.orderItemForm?.get('price')?.addValidators([this.isAllowedPrice()]);
+
     this.loadProducts();
     this.orderItemControlSubscription = this.orderItemControl.valueChanges
       .pipe(
@@ -86,8 +91,6 @@ export class OrderItemFormComponent implements OnInit {
       .subscribe((res) => {
         this.filteredProducts = res;
       });
-
-    this.orderItemForm?.get('quantity')?.addValidators([this.isMultiple()]);
   }
 
   ngOnDestroy(): void {
@@ -168,30 +171,34 @@ export class OrderItemFormComponent implements OnInit {
     const originalPrice = this.orderItemForm.get('product')?.value?.price;
     const price = this.orderItemForm.get('price')?.value;
 
-    let status = 'ORDERS.PROFITABILITY_STATUS.';
-    let statusClassName = 'item-form__status-';
+    let status: keyof typeof priceStatusProfitability;
     if (price > originalPrice) {
-      status += 'VERY_GOOD';
-      statusClassName += 'very-good';
+      status = 'VERY_GOOD';
     } else {
       const originalPriceWithPercentage = originalPrice - originalPrice * 0.1;
-      if (price >= originalPriceWithPercentage) {
-        status += 'GOOD';
-        statusClassName += 'good';
-      } else {
-        status += 'BAD';
-        statusClassName += 'bad';
-      }
+      status = price >= originalPriceWithPercentage ? 'GOOD' : 'BAD';
     }
 
-    this.priceTextProfitability = await this.translate.get(status).toPromise();
+    this.priceTextProfitability = await this.translate
+      .get('ORDERS.PROFITABILITY_STATUS.' + status)
+      .toPromise();
+
+    this.priceStatusProfitability = status;
 
     setTimeout(() => {
       this.renderer.setAttribute(
         this.priceStatus.nativeElement,
         'class',
-        statusClassName
+        priceStatusProfitability[status]
       );
     }, 50);
   }
+
+  isAllowedPrice = (): ValidatorFn => {
+    return () => {
+      if (this.priceStatusProfitability === 'BAD')
+        return { pofitability: this.priceTextProfitability };
+      return null;
+    };
+  };
 }

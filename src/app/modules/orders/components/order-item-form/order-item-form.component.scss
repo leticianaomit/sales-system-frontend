@@ -7,14 +7,19 @@
   padding-top: var(--dialog-padding);
 }
 
-.item-form__status-very-good {
+.item-form__actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.status-very-good {
   color: #4caf50;
 }
 
-.item-form__status-good {
+.status-good {
   color: #ff9800;
 }
 
-.item-form__status-bad {
+.status-bad {
   color: #f44336;
 }

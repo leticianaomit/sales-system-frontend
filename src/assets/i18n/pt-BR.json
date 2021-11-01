@@ -63,7 +63,8 @@
       "BAD": "Ruim"
     },
     "ERROR_MESSAGES": {
-      "IS_NOT_MULTIPLE": "O número deve ser múltiplo de <b>{{ quantity }}</b>"
+      "IS_NOT_MULTIPLE": "O número deve ser múltiplo de <b>{{ quantity }}</b>",
+      "INVALID_PROFABILITY": "Não é possível adicionar item com a <b>Rentabilidade {{ status }}</b>"
     }
   }
 }

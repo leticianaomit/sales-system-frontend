@@ -63,7 +63,17 @@
         matInput
         required
       />
+      <mat-error
+        *ngIf="orderItemForm.get('price')?.errors?.pofitability as status"
+        [innerHTML]="
+          'ORDERS.ERROR_MESSAGES.INVALID_PROFABILITY'
+            | translate: { status: this.status }
+        "
+      >
+      </mat-error>
     </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions class="item-form__actions">
     <p #priceStatus>
       <b *ngIf="priceTextProfitability">
         {{
@@ -72,18 +82,18 @@
         }}
       </b>
     </p>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close type="button">
-      {{ "GENERAL.CANCEL" | translate }}
-    </button>
-    <button
-      [disabled]="orderItemForm.invalid"
-      color="primary"
-      mat-raised-button
-      type="submit"
-    >
-      Salvar
-    </button>
+    <div>
+      <button mat-button mat-dialog-close type="button">
+        {{ "GENERAL.CANCEL" | translate }}
+      </button>
+      <button
+        [disabled]="orderItemForm.invalid"
+        color="primary"
+        mat-raised-button
+        type="submit"
+      >
+        Salvar
+      </button>
+    </div>
   </mat-dialog-actions>
 </form>
