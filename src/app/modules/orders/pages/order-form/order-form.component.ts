@@ -6,9 +6,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { take, skip, startWith, map } from 'rxjs/operators';
 import { ResponseClientDTO } from 'src/app/core/models/client';
+import { OrderItem } from 'src/app/core/models/order-item';
 import { ClientsService } from 'src/app/core/services/clients.service';
 import { OrderItemFormComponent } from '../../components/order-item-form/order-item-form.component';
 
@@ -18,18 +20,8 @@ import { OrderItemFormComponent } from '../../components/order-item-form/order-i
   styleUrls: ['./order-form.component.scss'],
 })
 export class OrderFormComponent implements OnInit {
-  productTableColumns: any = [
-    {
-      label: 'PRODUCTS.FORM.NAME',
-      property: 'name',
-      type: 'text',
-    },
-    {
-      property: 'id',
-      type: 'actions',
-    },
-  ];
-  displayedProductColumns = ['name', 'price', 'quantity'];
+  displayedProductColumns = ['name', 'original_price', 'price', 'quantity'];
+  dataSource = new MatTableDataSource<OrderItem>();
 
   orderControl = new FormControl();
   orderForm: FormGroup = this.fb.group({
@@ -37,6 +29,7 @@ export class OrderFormComponent implements OnInit {
   });
   clientList: ResponseClientDTO[] = [];
   filteredClients!: ResponseClientDTO[];
+  itemList: OrderItem[] = [];
 
   orderControlSubscription!: Subscription;
 
@@ -87,9 +80,23 @@ export class OrderFormComponent implements OnInit {
   }
 
   onClickBtnAddItem() {
-    this.dialog.open(OrderItemFormComponent, {
+    const dialog = this.dialog.open(OrderItemFormComponent, {
       width: '600px',
       autoFocus: false,
     });
+
+    const dialogSubscription = dialog.componentInstance.whenItemAdded.subscribe(
+      (item: OrderItem) => {
+        this.itemList.push(item);
+        this.dataSource.data = this.itemList;
+      }
+    );
+
+    dialog
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe(() => {
+        dialogSubscription?.unsubscribe();
+      });
   }
 }

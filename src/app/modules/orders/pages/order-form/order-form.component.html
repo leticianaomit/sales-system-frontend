@@ -9,7 +9,7 @@
 </app-page-title>
 
 <mat-card class="order-form__card">
-  <form [formGroup]="orderForm" fxLayout="column">
+  <form [formGroup]="orderForm" fxLayout="column" fxLayoutGap="30px">
     <div fxLayout="column">
       <mat-form-field appearance="fill">
         <mat-label>{{ "ORDERS.FORM.SELECT_CLIENT" | translate }}</mat-label>
@@ -25,11 +25,54 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <div>
-        <div fxLayout="row" fxLayoutAlign="space-between end">
-          <h4>
-            <b> {{ "PRODUCTS.TITLE" | translate }}</b>
-          </h4>
+      <div fxLayout="column" fxLayoutGap="10px">
+        <table mat-table [dataSource]="dataSource" class="w-full">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "ORDERS.FORM.ITEM_NAME" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.product.name }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="original_price">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "ORDERS.FORM.ORIGINAL_PRICE" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.product.price }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "ORDERS.FORM.PRICE" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.price }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "ORDERS.FORM.QUANTITY" | translate }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.quantity }}
+            </td>
+          </ng-container>
+
+          <tr class="mat-row order-form__table-empty" *matNoDataRow>
+            <td class="mat-cell" colspan="5">
+              {{ "ORDERS.FORM.ITEMS_EMPTY_TABLE" | translate }}
+            </td>
+          </tr>
+
+          <tr mat-header-row *matHeaderRowDef="displayedProductColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedProductColumns"
+          ></tr>
+        </table>
+        <div fxLayout="row">
           <button
             mat-button
             type="button"
@@ -37,7 +80,7 @@
             (click)="onClickBtnAddItem()"
           >
             <mat-icon>add</mat-icon>
-            {{ "GENERAL.ADD" | translate }}
+            {{ "GENERAL.ADD" | translate }} {{ "ORDERS.FORM.ITEM" | translate }}
           </button>
         </div>
       </div>

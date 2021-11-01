@@ -1,4 +1,4 @@
-<form [formGroup]="orderItemForm">
+<form (ngSubmit)="submitForm()" [formGroup]="orderItemForm">
   <div>
     <h2 fxFlex="auto">
       {{ "GENERAL.ADD" | translate }}

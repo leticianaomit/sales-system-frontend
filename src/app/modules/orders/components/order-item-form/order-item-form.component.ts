@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -12,6 +18,8 @@ import { ProductsService } from 'src/app/core/services/products.service';
 import { CurrencyService } from 'src/app/shared/services/currency.service';
 import { MatOption } from '@angular/material/core';
 import { MatAutocomplete } from '@angular/material/autocomplete';
+import { OrderItem } from 'src/app/core/models/order-item';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-order-item-form',
@@ -19,6 +27,8 @@ import { MatAutocomplete } from '@angular/material/autocomplete';
   styleUrls: ['./order-item-form.component.scss'],
 })
 export class OrderItemFormComponent implements OnInit {
+  @Output() whenItemAdded = new EventEmitter<OrderItem>();
+
   orderItemForm: FormGroup = this.fb.group({
     product: [null, Validators.required],
     price: [{ value: null, disabled: true }, Validators.required],
@@ -37,7 +47,8 @@ export class OrderItemFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productsService: ProductsService,
-    private currencyService: CurrencyService
+    private currencyService: CurrencyService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -97,5 +108,16 @@ export class OrderItemFormComponent implements OnInit {
       });
       this.originalPrice = option.value.price;
     }
+  }
+
+  submitForm() {
+    const form = this.orderItemForm.value;
+    const item: OrderItem = form;
+
+    // if (this.idClient) this.updateClient(client);
+    // else
+    this.whenItemAdded.emit(item);
+
+    this.dialog.closeAll();
   }
 }

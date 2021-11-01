@@ -47,12 +47,14 @@
     "TITLE_SINGLE": "Pedido",
     "EMPTY_TABLE": "Nenhum pedido foi encontrado",
     "FORM": {
+      "ITEMS_EMPTY_TABLE": "Nenhum item foi adicionado",
       "SELECT_CLIENT": "Selecione um cliente",
       "SELECT_PRODUCT": "Selecione um produto",
       "ITEM": "Item",
       "QUANTITY": "Quantidade",
       "ORIGINAL_PRICE": "Preço original",
-      "PRICE": "Preço"
+      "PRICE": "Preço",
+      "ITEM_NAME": "Nome do produto"
     }
   }
 }
