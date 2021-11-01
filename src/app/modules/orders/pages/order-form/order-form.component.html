@@ -18,8 +18,13 @@
           matInput
           [matAutocomplete]="auto"
           [formControl]="orderControl"
+          required
         />
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="getClientName">
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          [displayWith]="getClientName"
+          (optionSelected)="onClientSelected($event.option)"
+        >
           <mat-option *ngFor="let option of filteredClients" [value]="option">
             {{ option.name }}
           </mat-option>

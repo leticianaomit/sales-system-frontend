@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatOption } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -33,6 +34,7 @@ export class OrderFormComponent implements OnInit {
   orderControl = new FormControl();
   orderForm: FormGroup = this.fb.group({
     client: [null, Validators.required],
+    items: [[], [Validators.required, Validators.minLength(1)]],
   });
   clientList: ResponseClientDTO[] = [];
   filteredClients!: ResponseClientDTO[];
@@ -96,7 +98,7 @@ export class OrderFormComponent implements OnInit {
     const dialogSubscription = dialog.componentInstance.whenItemAdded.subscribe(
       (item: OrderItem) => {
         this.itemList.push(item);
-        this.updateItemsTable();
+        this.updateItems();
       }
     );
 
@@ -118,7 +120,7 @@ export class OrderFormComponent implements OnInit {
     const dialogSubscription = dialog.componentInstance.whenItemAdded.subscribe(
       (item: OrderItem) => {
         this.itemList.splice(index, 1, item);
-        this.updateItemsTable();
+        this.updateItems();
       }
     );
 
@@ -132,10 +134,21 @@ export class OrderFormComponent implements OnInit {
 
   onClickBtnDeleteItem(index: number) {
     this.itemList.splice(index, 1);
-    this.updateItemsTable();
+    this.updateItems();
   }
 
-  updateItemsTable() {
+  updateItems() {
     this.dataSource.data = this.itemList;
+    this.orderForm.patchValue({ items: this.itemList });
+  }
+
+  onClientSelected(client: MatOption) {
+    if (client?.value?.id) {
+      this.setClient(client.value);
+    }
+  }
+
+  setClient(data: ResponseClientDTO) {
+    this.orderForm.patchValue({ client: data });
   }
 }
