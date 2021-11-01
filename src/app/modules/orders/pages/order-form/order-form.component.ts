@@ -12,6 +12,7 @@ import { take, skip, startWith, map } from 'rxjs/operators';
 import { ResponseClientDTO } from 'src/app/core/models/client';
 import { OrderItem } from 'src/app/core/models/order-item';
 import { ClientsService } from 'src/app/core/services/clients.service';
+import { DialogDeleteComponent } from 'src/app/shared/components/dialog-delete/dialog-delete.component';
 import { OrderItemFormComponent } from '../../components/order-item-form/order-item-form.component';
 
 @Component({
@@ -20,7 +21,13 @@ import { OrderItemFormComponent } from '../../components/order-item-form/order-i
   styleUrls: ['./order-form.component.scss'],
 })
 export class OrderFormComponent implements OnInit {
-  displayedProductColumns = ['name', 'original_price', 'price', 'quantity'];
+  displayedProductColumns = [
+    'name',
+    'original_price',
+    'price',
+    'quantity',
+    'actions',
+  ];
   dataSource = new MatTableDataSource<OrderItem>();
 
   orderControl = new FormControl();
@@ -32,6 +39,7 @@ export class OrderFormComponent implements OnInit {
   itemList: OrderItem[] = [];
 
   orderControlSubscription!: Subscription;
+  dialogSubscription!: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -88,7 +96,7 @@ export class OrderFormComponent implements OnInit {
     const dialogSubscription = dialog.componentInstance.whenItemAdded.subscribe(
       (item: OrderItem) => {
         this.itemList.push(item);
-        this.dataSource.data = this.itemList;
+        this.updateItemsTable();
       }
     );
 
@@ -98,5 +106,36 @@ export class OrderFormComponent implements OnInit {
       .subscribe(() => {
         dialogSubscription?.unsubscribe();
       });
+  }
+
+  onClickBtnEditItem(index: number, data: OrderItem) {
+    const dialog = this.dialog.open(OrderItemFormComponent, {
+      data,
+      width: '600px',
+      autoFocus: false,
+    });
+
+    const dialogSubscription = dialog.componentInstance.whenItemAdded.subscribe(
+      (item: OrderItem) => {
+        this.itemList.splice(index, 1, item);
+        this.updateItemsTable();
+      }
+    );
+
+    dialog
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe(() => {
+        dialogSubscription?.unsubscribe();
+      });
+  }
+
+  onClickBtnDeleteItem(index: number) {
+    this.itemList.splice(index, 1);
+    this.updateItemsTable();
+  }
+
+  updateItemsTable() {
+    this.dataSource.data = this.itemList;
   }
 }

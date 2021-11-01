@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Inject,
   OnInit,
   Output,
   Renderer2,
@@ -23,7 +24,7 @@ import { CurrencyService } from 'src/app/shared/services/currency.service';
 import { MatOption } from '@angular/material/core';
 import { MatAutocomplete } from '@angular/material/autocomplete';
 import { OrderItem } from 'src/app/core/models/order-item';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -52,13 +53,25 @@ export class OrderItemFormComponent implements OnInit {
   @ViewChild('priceStatus') priceStatus!: ElementRef;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) private itemData: OrderItem,
     private fb: FormBuilder,
     private productsService: ProductsService,
     private currencyService: CurrencyService,
     private dialog: MatDialog,
     public translate: TranslateService,
     private renderer: Renderer2
-  ) {}
+  ) {
+    if (this.itemData) {
+      this.originalPrice = this.itemData.product.price;
+      this.formattedPrice = this.itemData.price;
+      this.orderItemControl.setValue(this.itemData.product);
+      this.setItem(
+        this.itemData.product,
+        this.itemData.price,
+        this.itemData.quantity
+      );
+    }
+  }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -110,16 +123,25 @@ export class OrderItemFormComponent implements OnInit {
 
   onProductSelected(option: MatOption) {
     if (option?.value?.id) {
-      this.orderItemForm.get('price')?.enable();
-      this.orderItemForm.get('quantity')?.enable();
-      this.orderItemForm.patchValue({
-        product: option.value,
-        price: option.value.price,
-        quantity: option.value.multiple,
-      });
-      this.originalPrice = option.value.price;
-      this.calculateProfitability();
+      this.setItem(option.value, option.value.price, option.value.multiple);
     }
+  }
+
+  setItem(
+    product: ResponseProductDTO,
+    price: OrderItem['price'],
+    quantity: OrderItem['quantity']
+  ) {
+    this.orderItemForm.get('price')?.enable();
+    this.orderItemForm.get('quantity')?.enable();
+    this.orderItemForm.setValue({
+      product,
+      price,
+      quantity,
+    });
+
+    this.originalPrice = product.price;
+    this.calculateProfitability();
   }
 
   submitForm() {
@@ -163,10 +185,13 @@ export class OrderItemFormComponent implements OnInit {
     }
 
     this.priceTextProfitability = await this.translate.get(status).toPromise();
-    this.renderer.setAttribute(
-      this.priceStatus.nativeElement,
-      'class',
-      statusClassName
-    );
+
+    setTimeout(() => {
+      this.renderer.setAttribute(
+        this.priceStatus.nativeElement,
+        'class',
+        statusClassName
+      );
+    }, 50);
   }
 }

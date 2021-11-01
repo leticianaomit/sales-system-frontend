@@ -59,6 +59,31 @@
               {{ element.quantity }}
             </td>
           </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              <div
+                class="client-list__table-actions"
+                fxLayout="row"
+                fxLayoutAlign="end center"
+              >
+                <button
+                  color="accent"
+                  mat-button
+                  (click)="onClickBtnEditItem(i, element)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  color="warn"
+                  mat-button
+                  (click)="onClickBtnDeleteItem(i)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
 
           <tr class="mat-row order-form__table-empty" *matNoDataRow>
             <td class="mat-cell" colspan="5">
