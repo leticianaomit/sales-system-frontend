@@ -54,7 +54,13 @@
       "QUANTITY": "Quantidade",
       "ORIGINAL_PRICE": "Preço original",
       "PRICE": "Preço",
-      "ITEM_NAME": "Nome do produto"
+      "ITEM_NAME": "Nome do produto",
+      "PRICE_PROFITABILITY": "Rentabilidade {{ status }}"
+    },
+    "PROFITABILITY_STATUS": {
+      "VERY_GOOD": "Ótima",
+      "GOOD": "Boa",
+      "BAD": "Ruim"
     },
     "ERROR_MESSAGES": {
       "IS_NOT_MULTIPLE": "O número deve ser múltiplo de <b>{{ quantity }}</b>"

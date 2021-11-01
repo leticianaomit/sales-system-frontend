@@ -1,8 +1,10 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   OnInit,
   Output,
+  Renderer2,
   ViewChild,
 } from '@angular/core';
 import {
@@ -22,6 +24,7 @@ import { MatOption } from '@angular/material/core';
 import { MatAutocomplete } from '@angular/material/autocomplete';
 import { OrderItem } from 'src/app/core/models/order-item';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-order-item-form',
@@ -41,16 +44,20 @@ export class OrderItemFormComponent implements OnInit {
   filteredProducts!: ResponseProductDTO[];
   formattedPrice!: string;
   originalPrice: string = '';
+  priceTextProfitability: string = '';
 
   orderItemControlSubscription!: Subscription;
 
   @ViewChild(MatAutocomplete) itemAutocomplete!: any;
+  @ViewChild('priceStatus') priceStatus!: ElementRef;
 
   constructor(
     private fb: FormBuilder,
     private productsService: ProductsService,
     private currencyService: CurrencyService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public translate: TranslateService,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
@@ -111,6 +118,7 @@ export class OrderItemFormComponent implements OnInit {
         quantity: option.value.multiple,
       });
       this.originalPrice = option.value.price;
+      this.calculateProfitability();
     }
   }
 
@@ -133,4 +141,32 @@ export class OrderItemFormComponent implements OnInit {
       return null;
     };
   };
+
+  async calculateProfitability(): Promise<void> {
+    const originalPrice = this.orderItemForm.get('product')?.value?.price;
+    const price = this.orderItemForm.get('price')?.value;
+
+    let status = 'ORDERS.PROFITABILITY_STATUS.';
+    let statusClassName = 'item-form__status-';
+    if (price > originalPrice) {
+      status += 'VERY_GOOD';
+      statusClassName += 'very-good';
+    } else {
+      const originalPriceWithPercentage = originalPrice - originalPrice * 0.1;
+      if (price >= originalPriceWithPercentage) {
+        status += 'GOOD';
+        statusClassName += 'good';
+      } else {
+        status += 'BAD';
+        statusClassName += 'bad';
+      }
+    }
+
+    this.priceTextProfitability = await this.translate.get(status).toPromise();
+    this.renderer.setAttribute(
+      this.priceStatus.nativeElement,
+      'class',
+      statusClassName
+    );
+  }
 }
