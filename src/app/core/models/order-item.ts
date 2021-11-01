@@ -1,6 +1,6 @@
 import { ResponseProductDTO } from './product';
 
-export interface OrderItem {
+export interface ResponseOrderItemDTO {
   product: ResponseProductDTO;
   price: string;
   quantity: number;

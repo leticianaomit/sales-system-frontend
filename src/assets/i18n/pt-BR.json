@@ -46,6 +46,9 @@
     "TITLE": "Pedidos",
     "TITLE_SINGLE": "Pedido",
     "EMPTY_TABLE": "Nenhum pedido foi encontrado",
+    "TABLE": {
+      "CLIENT_NAME": "Nome do cliente"
+    },
     "FORM": {
       "ITEMS_EMPTY_TABLE": "Nenhum item foi adicionado",
       "SELECT_CLIENT": "Selecione um cliente",

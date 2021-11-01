@@ -23,7 +23,7 @@ import { ProductsService } from 'src/app/core/services/products.service';
 import { CurrencyService } from 'src/app/shared/services/currency.service';
 import { MatOption } from '@angular/material/core';
 import { MatAutocomplete } from '@angular/material/autocomplete';
-import { OrderItem } from 'src/app/core/models/order-item';
+import { ResponseOrderItemDTO } from 'src/app/core/models/order-item';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { priceStatusProfitability } from 'src/app/core/enums/order-item';
@@ -34,7 +34,7 @@ import { priceStatusProfitability } from 'src/app/core/enums/order-item';
   styleUrls: ['./order-item-form.component.scss'],
 })
 export class OrderItemFormComponent implements OnInit {
-  @Output() whenItemAdded = new EventEmitter<OrderItem>();
+  @Output() whenItemAdded = new EventEmitter<ResponseOrderItemDTO>();
 
   orderItemForm: FormGroup = this.fb.group({
     product: [null, Validators.required],
@@ -55,7 +55,7 @@ export class OrderItemFormComponent implements OnInit {
   @ViewChild('priceStatus') priceStatus!: ElementRef;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private itemData: OrderItem,
+    @Inject(MAT_DIALOG_DATA) private itemData: ResponseOrderItemDTO,
     private fb: FormBuilder,
     private productsService: ProductsService,
     private currencyService: CurrencyService,
@@ -132,8 +132,8 @@ export class OrderItemFormComponent implements OnInit {
 
   setItem(
     product: ResponseProductDTO,
-    price: OrderItem['price'],
-    quantity: OrderItem['quantity']
+    price: ResponseOrderItemDTO['price'],
+    quantity: ResponseOrderItemDTO['quantity']
   ) {
     this.orderItemForm.get('price')?.enable();
     this.orderItemForm.get('quantity')?.enable();
@@ -149,7 +149,7 @@ export class OrderItemFormComponent implements OnInit {
 
   submitForm() {
     const form = this.orderItemForm.value;
-    const item: OrderItem = form;
+    const item: ResponseOrderItemDTO = form;
 
     this.whenItemAdded.emit(item);
 

@@ -9,7 +9,12 @@
 </app-page-title>
 
 <mat-card class="order-form__card">
-  <form [formGroup]="orderForm" fxLayout="column" fxLayoutGap="30px">
+  <form
+    (ngSubmit)="submitForm()"
+    [formGroup]="orderForm"
+    fxLayout="column"
+    fxLayoutGap="30px"
+  >
     <div fxLayout="column">
       <mat-form-field appearance="fill">
         <mat-label>{{ "ORDERS.FORM.SELECT_CLIENT" | translate }}</mat-label>
@@ -67,11 +72,7 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element; let i = index">
-              <div
-                class="client-list__table-actions"
-                fxLayout="row"
-                fxLayoutAlign="end center"
-              >
+              <div fxLayout="row" fxLayoutAlign="end center">
                 <button
                   color="accent"
                   mat-button

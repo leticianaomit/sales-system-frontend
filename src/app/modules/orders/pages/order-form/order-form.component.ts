@@ -8,12 +8,13 @@ import {
 import { MatOption } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { take, skip, startWith, map } from 'rxjs/operators';
 import { ResponseClientDTO } from 'src/app/core/models/client';
-import { OrderItem } from 'src/app/core/models/order-item';
+import { ResponseOrderItemDTO } from 'src/app/core/models/order-item';
 import { ClientsService } from 'src/app/core/services/clients.service';
-import { DialogDeleteComponent } from 'src/app/shared/components/dialog-delete/dialog-delete.component';
+import { OrdersService } from 'src/app/core/services/orders.service';
 import { OrderItemFormComponent } from '../../components/order-item-form/order-item-form.component';
 
 @Component({
@@ -29,7 +30,7 @@ export class OrderFormComponent implements OnInit {
     'quantity',
     'actions',
   ];
-  dataSource = new MatTableDataSource<OrderItem>();
+  dataSource = new MatTableDataSource<ResponseOrderItemDTO>();
 
   orderControl = new FormControl();
   orderForm: FormGroup = this.fb.group({
@@ -38,7 +39,7 @@ export class OrderFormComponent implements OnInit {
   });
   clientList: ResponseClientDTO[] = [];
   filteredClients!: ResponseClientDTO[];
-  itemList: OrderItem[] = [];
+  itemList: ResponseOrderItemDTO[] = [];
 
   orderControlSubscription!: Subscription;
   dialogSubscription!: Subscription;
@@ -46,7 +47,9 @@ export class OrderFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private clientsService: ClientsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private ordersService: OrdersService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -96,7 +99,7 @@ export class OrderFormComponent implements OnInit {
     });
 
     const dialogSubscription = dialog.componentInstance.whenItemAdded.subscribe(
-      (item: OrderItem) => {
+      (item: ResponseOrderItemDTO) => {
         this.itemList.push(item);
         this.updateItems();
       }
@@ -110,7 +113,7 @@ export class OrderFormComponent implements OnInit {
       });
   }
 
-  onClickBtnEditItem(index: number, data: OrderItem) {
+  onClickBtnEditItem(index: number, data: ResponseOrderItemDTO) {
     const dialog = this.dialog.open(OrderItemFormComponent, {
       data,
       width: '600px',
@@ -118,7 +121,7 @@ export class OrderFormComponent implements OnInit {
     });
 
     const dialogSubscription = dialog.componentInstance.whenItemAdded.subscribe(
-      (item: OrderItem) => {
+      (item: ResponseOrderItemDTO) => {
         this.itemList.splice(index, 1, item);
         this.updateItems();
       }
@@ -150,5 +153,10 @@ export class OrderFormComponent implements OnInit {
 
   setClient(data: ResponseClientDTO) {
     this.orderForm.patchValue({ client: data });
+  }
+
+  async submitForm() {
+    await this.ordersService.saveOrder(this.orderForm.value);
+    this.router.navigate(['orders']);
   }
 }

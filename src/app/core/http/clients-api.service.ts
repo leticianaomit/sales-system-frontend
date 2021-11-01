@@ -13,15 +13,15 @@ export class ClientsApiService {
     return this.http.get<ResponseClientDTO[]>(`clients`);
   }
 
-  create(contact: ResponseClientDTO): Observable<any> {
-    return this.http.post(`clients`, contact);
+  create(client: ResponseClientDTO): Observable<any> {
+    return this.http.post(`clients`, client);
   }
 
   update(
     id: ResponseClientDTO['id'],
-    contact: ResponseClientDTO
+    client: ResponseClientDTO
   ): Observable<any> {
-    return this.http.patch(`clients/${id}`, contact);
+    return this.http.patch(`clients/${id}`, client);
   }
 
   delete(id: ResponseClientDTO['id']): Observable<any> {

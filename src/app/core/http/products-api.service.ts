@@ -13,15 +13,15 @@ export class ProductsApiService {
     return this.http.get<ResponseProductDTO[]>(`products`);
   }
 
-  create(contact: ResponseProductDTO): Observable<any> {
-    return this.http.post(`products`, contact);
+  create(product: ResponseProductDTO): Observable<any> {
+    return this.http.post(`products`, product);
   }
 
   update(
     id: ResponseProductDTO['id'],
-    contact: ResponseProductDTO
+    product: ResponseProductDTO
   ): Observable<any> {
-    return this.http.patch(`products/${id}`, contact);
+    return this.http.patch(`products/${id}`, product);
   }
 
   delete(id: ResponseProductDTO['id']): Observable<any> {
