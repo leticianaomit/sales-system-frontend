@@ -13,7 +13,7 @@ RUN npm run build --prod
 
 FROM nginx:latest AS nginx
 
-COPY --from=build /dist/src/app/dist/frontend /usr/share/nginx/html
+COPY --from=build /dist/src/app/dist/sales-system-frontend /usr/share/nginx/html
 
 COPY /nginx.conf /etc/nginx/conf.d/default.conf
 
