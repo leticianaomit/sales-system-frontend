@@ -11,7 +11,7 @@ import {
   HttpClientModule,
 } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { LayoutModule } from './shared/layout/layout.module';
+import { LayoutModule } from './layout/layout.module';
 import { InterceptorModule } from './core/interceptor/interceptor.module';
 import { MaterialModule } from './shared/modules/material.module';
 import { CurrencyPipe } from '@angular/common';
