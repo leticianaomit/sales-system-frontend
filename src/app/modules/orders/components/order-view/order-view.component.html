@@ -9,10 +9,10 @@
 </div>
 <mat-divider></mat-divider>
 <mat-dialog-content class="order-view__content" fxLayout="column">
-  <h5>
-    <b>{{ "ORDERS.TABLE.CLIENT_NAME" | translate }}</b>
-  </h5>
-  <p>{{ order.client.name }}</p>
+  <p>
+    <b>{{ "ORDERS.TABLE.CLIENT_NAME" | translate }}:</b> {{ order.client.name }}
+  </p>
+
   <table mat-table [dataSource]="dataSource" class="w-full">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>

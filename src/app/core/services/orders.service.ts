@@ -57,8 +57,6 @@ export class OrdersService {
 
   saveOrder(order: ResponseOrderDTO): Promise<void> {
     return new Promise((resolve) => {
-      console.log(order);
-      
       this.ordersApiService
         .create(order)
         .pipe(take(1))
