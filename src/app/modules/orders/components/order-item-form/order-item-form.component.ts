@@ -36,6 +36,7 @@ import { priceStatusProfitability } from 'src/app/core/enums/order-item';
 export class OrderItemFormComponent implements OnInit {
   @Output() whenItemAdded = new EventEmitter<ResponseOrderItemDTO>();
 
+  isEditForm: boolean = false;
   orderItemForm: FormGroup = this.fb.group({
     product: [null, Validators.required],
     price: [{ value: null, disabled: true }, Validators.required],
@@ -64,9 +65,11 @@ export class OrderItemFormComponent implements OnInit {
     private renderer: Renderer2
   ) {
     if (this.itemData) {
+      this.isEditForm = true;
       this.originalPrice = this.itemData.product.price;
       this.formattedPrice = this.itemData.price;
       this.orderItemControl.setValue(this.itemData.product);
+      this.orderItemControl.disable();
       this.setItem(
         this.itemData.product,
         this.itemData.price,

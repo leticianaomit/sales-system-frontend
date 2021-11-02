@@ -1,7 +1,7 @@
 <form (ngSubmit)="submitForm()" [formGroup]="orderItemForm">
   <div>
     <h2 fxFlex="auto">
-      {{ "GENERAL.ADD" | translate }}
+      {{ (isEditForm ? "GENERAL.EDIT" : "GENERAL.ADD") | translate }}
       {{ "ORDERS.FORM.ITEM" | translate | lowercase }}
     </h2>
     <button mat-dialog-close mat-icon-button type="button">
