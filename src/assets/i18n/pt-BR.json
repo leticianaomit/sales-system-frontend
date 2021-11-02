@@ -5,7 +5,8 @@
     "EDIT": "Editar",
     "ADD": "Adicionar",
     "OK": "Ok",
-    "TRY_AGAIN": "Tente novamente"
+    "TRY_AGAIN": "Tente novamente",
+    "VIEW": "Visualizar"
   },
   "CRUD_MESSAGES": {
     "CREATE": {

@@ -1,0 +1,45 @@
+<div>
+  <h2 fxFlex="auto">
+    {{ "GENERAL.VIEW" | translate }}
+    {{ "ORDERS.TITLE_SINGLE" | translate | lowercase }}
+  </h2>
+  <button mat-dialog-close mat-icon-button type="button">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-content class="order-view__content" fxLayout="column">
+  <h5>
+    <b>{{ "ORDERS.TABLE.CLIENT_NAME" | translate }}</b>
+  </h5>
+  <p>{{ order.client.name }}</p>
+  <table mat-table [dataSource]="dataSource" class="w-full">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ "ORDERS.FORM.ITEM_NAME" | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.product.name }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ "ORDERS.FORM.PRICE" | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.price }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ "ORDERS.FORM.QUANTITY" | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.quantity }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedItemColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedItemColumns"></tr>
+  </table>
+</mat-dialog-content>
