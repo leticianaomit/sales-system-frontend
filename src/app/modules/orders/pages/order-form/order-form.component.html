@@ -74,6 +74,7 @@
             <td mat-cell *matCellDef="let element; let i = index">
               <div fxLayout="row" fxLayoutAlign="end center">
                 <button
+                type="button"
                   color="accent"
                   mat-button
                   (click)="onClickBtnEditItem(i, element)"
@@ -81,6 +82,7 @@
                   <mat-icon>edit</mat-icon>
                 </button>
                 <button
+                type="button"
                   color="warn"
                   mat-button
                   (click)="onClickBtnDeleteItem(i)"

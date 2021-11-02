@@ -28,6 +28,7 @@ export class ProductFormComponent implements OnInit {
   ) {
     if (this.productData?.id) {
       this.idProduct = this.productData.id;
+      this.formattedPrice = this.productData.price
       this.productForm.patchValue(this.productData);
     }
   }
